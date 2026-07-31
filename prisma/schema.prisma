@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Resource {
+  id            String   @id @default(cuid())
+  title         String
+  resourceType  String
+  url           String
+  description   String?
+  personalNotes String?
+  category      String?
+  tags          String[]
+  source        String?
+  favorite      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([resourceType])
+  @@index([favorite])
+  @@index([createdAt])
+}
+
+model JobApplication {
+  id            String    @id @default(cuid())
+  company       String
+  position      String
+  source        String?
+  jobUrl        String?
+  appliedDate   DateTime
+  status        String    @default("Applied")
+  salary        String?
+  hrName        String?
+  hrContact     String?
+  followUpDate  DateTime?
+  resumeVersion String?
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([status])
+  @@index([appliedDate])
+  @@index([createdAt])
+}
