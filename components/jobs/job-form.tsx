@@ -55,6 +55,8 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
       appliedDate: new Date().toISOString().split("T")[0],
       status: "Applied",
       salary: "",
+      location: "",
+      description: "",
       hrName: "",
       hrContact: "",
       followUpDate: "",
@@ -73,6 +75,8 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
         appliedDate: initialData.appliedDate ? formatDateInput(initialData.appliedDate) : new Date().toISOString().split("T")[0],
         status: (initialData.status as CreateJobInput["status"]) ?? "Applied",
         salary: initialData.salary ?? "",
+        location: initialData.location ?? "",
+        description: initialData.description ?? "",
         hrName: initialData.hrName ?? "",
         hrContact: initialData.hrContact ?? "",
         followUpDate: initialData.followUpDate ? formatDateInput(initialData.followUpDate) : "",
@@ -150,6 +154,18 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
               </div>
             </div>
 
+            {/* Location + Salary */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label style={labelStyle}>Location</label>
+                <input {...register("location")} style={inputStyle} placeholder="e.g. Remote, Bengaluru, Hybrid" />
+              </div>
+              <div>
+                <label style={labelStyle}>Salary (CTC)</label>
+                <input {...register("salary")} style={inputStyle} placeholder="e.g. 12 LPA" />
+              </div>
+            </div>
+
             {/* Job URL + Source */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -163,19 +179,7 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
               </div>
             </div>
 
-            {/* Salary + Resume Version */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label style={labelStyle}>Salary (CTC)</label>
-                <input {...register("salary")} style={inputStyle} placeholder="e.g. 12 LPA" />
-              </div>
-              <div>
-                <label style={labelStyle}>Resume Version</label>
-                <input {...register("resumeVersion")} style={inputStyle} placeholder="v3.0" />
-              </div>
-            </div>
-
-            {/* HR Name + Contact */}
+            {/* HR Name + HR Contact */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label style={labelStyle}>HR Name</label>
@@ -187,15 +191,31 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
               </div>
             </div>
 
-            {/* Follow Up Date */}
+            {/* Follow Up Date + Resume Version */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label style={labelStyle}>Follow-up Date</label>
+                <input type="date" {...register("followUpDate")} style={inputStyle} />
+              </div>
+              <div>
+                <label style={labelStyle}>Resume Version</label>
+                <input {...register("resumeVersion")} style={inputStyle} placeholder="v3.0" />
+              </div>
+            </div>
+
+            {/* Job Description / Details */}
             <div>
-              <label style={labelStyle}>Follow-up Date</label>
-              <input type="date" {...register("followUpDate")} style={inputStyle} />
+              <label style={labelStyle}>Job Description / Details</label>
+              <textarea
+                {...register("description")}
+                style={{ ...inputStyle, resize: "vertical", minHeight: "85px" }}
+                placeholder="Key responsibilities, tech stack, job requirements…"
+              />
             </div>
 
             {/* Notes */}
             <div>
-              <label style={labelStyle}>Notes</label>
+              <label style={labelStyle}>Personal Notes</label>
               <textarea
                 {...register("notes")}
                 style={{ ...inputStyle, resize: "vertical", minHeight: "80px" }}

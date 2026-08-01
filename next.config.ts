@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   },
   // Ensure Prisma edge-compatibility
   serverExternalPackages: ["@prisma/client"],
+  allowedDevOrigins: ["localhost:3000", "192.168.1.6"],
 };
 
 export default nextConfig;

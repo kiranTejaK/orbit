@@ -25,6 +25,8 @@ export interface JobApplication {
   appliedDate: string;
   status: string;
   salary?: string | null;
+  location?: string | null;
+  description?: string | null;
   hrName?: string | null;
   hrContact?: string | null;
   followUpDate?: string | null;

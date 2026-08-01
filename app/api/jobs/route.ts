@@ -22,6 +22,8 @@ export async function GET(request: NextRequest) {
       where.OR = [
         { company: { contains: query, mode: "insensitive" } },
         { position: { contains: query, mode: "insensitive" } },
+        { location: { contains: query, mode: "insensitive" } },
+        { description: { contains: query, mode: "insensitive" } },
         { notes: { contains: query, mode: "insensitive" } },
         { hrName: { contains: query, mode: "insensitive" } },
       ];
@@ -80,6 +82,8 @@ export async function POST(request: NextRequest) {
         jobUrl: rest.jobUrl || null,
         source: rest.source || null,
         salary: rest.salary || null,
+        location: rest.location || null,
+        description: rest.description || null,
         hrName: rest.hrName || null,
         hrContact: rest.hrContact || null,
         resumeVersion: rest.resumeVersion || null,

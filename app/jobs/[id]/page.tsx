@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Calendar, User, Phone, DollarSign, FileText, StickyNote } from "lucide-react";
+import { ArrowLeft, ExternalLink, Calendar, User, DollarSign, FileText, StickyNote, MapPin } from "lucide-react";
 import { AppShell } from "@/components/layout/app-shell";
 import { JobStatusBadge } from "@/components/jobs/job-status-badge";
+import { JobDetailActions } from "@/components/jobs/job-detail-actions";
 import prisma from "@/lib/prisma";
 import { formatDate } from "@/utils/format";
 import { JOB_STATUSES } from "@/lib/constants";
@@ -22,8 +23,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function JobDetailPage({ params }: Props) {
   const { id } = await params;
-  const job = await prisma.jobApplication.findUnique({ where: { id } });
-  if (!job) notFound();
+  const rawJob = await prisma.jobApplication.findUnique({ where: { id } });
+  if (!rawJob) notFound();
+
+  const job = {
+    ...rawJob,
+    appliedDate: rawJob.appliedDate.toISOString(),
+    followUpDate: rawJob.followUpDate?.toISOString() ?? null,
+    createdAt: rawJob.createdAt.toISOString(),
+    updatedAt: rawJob.updatedAt.toISOString(),
+  };
 
   // Build status timeline
   const statusIndex = JOB_STATUSES.indexOf(job.status as typeof JOB_STATUSES[number]);
@@ -54,18 +63,7 @@ export default async function JobDetailPage({ params }: Props) {
               </h1>
               <p className="text-base sm:text-lg mt-1 break-words" style={{ color: "var(--muted)" }}>{job.company}</p>
             </div>
-            {job.jobUrl && (
-              <a
-                href={job.jobUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold flex-shrink-0 w-full sm:w-auto min-h-[44px]"
-                style={{ background: "var(--accent)", color: "#fff" }}
-              >
-                <ExternalLink size={15} />
-                Job Listing
-              </a>
-            )}
+            <JobDetailActions job={job} />
           </div>
 
           {/* Status Timeline */}
@@ -113,6 +111,16 @@ export default async function JobDetailPage({ params }: Props) {
                 <p className="text-sm font-medium truncate" style={{ color: "var(--foreground)" }}>{formatDate(job.appliedDate)}</p>
               </div>
             </div>
+
+            {job.location && (
+              <div className="flex items-center gap-3 p-3 rounded-xl min-w-0" style={{ background: "var(--muted-bg)" }}>
+                <MapPin size={16} className="flex-shrink-0" style={{ color: "var(--muted)" }} />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs" style={{ color: "var(--muted)" }}>Location</p>
+                  <p className="text-sm font-medium truncate" style={{ color: "var(--foreground)" }}>{job.location}</p>
+                </div>
+              </div>
+            )}
 
             {job.followUpDate && (
               <div className="flex items-center gap-3 p-3 rounded-xl min-w-0" style={{ background: "var(--muted-bg)" }}>
@@ -166,12 +174,27 @@ export default async function JobDetailPage({ params }: Props) {
             )}
           </div>
 
-          {/* Notes */}
+          {/* Job Description / Details */}
+          {job.description && (
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-3">
+                <FileText size={14} style={{ color: "var(--muted)" }} />
+                <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Job Description / Details</p>
+              </div>
+              <div className="p-4 rounded-xl" style={{ background: "var(--muted-bg)", border: "1px solid var(--border)" }}>
+                <p className="text-sm leading-relaxed whitespace-pre-wrap break-words" style={{ color: "var(--foreground)" }}>
+                  {job.description}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Personal Notes */}
           {job.notes && (
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <StickyNote size={14} style={{ color: "var(--muted)" }} />
-                <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Notes</p>
+                <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Personal Notes</p>
               </div>
               <div className="p-4 rounded-xl" style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.15)" }}>
                 <p className="text-sm leading-relaxed whitespace-pre-wrap break-words" style={{ color: "var(--foreground)" }}>

@@ -45,7 +45,7 @@ export async function PUT(
       return Response.json({ error: "Job application not found" }, { status: 404 });
     }
 
-    const { appliedDate, followUpDate, jobUrl, ...rest } = parsed.data;
+    const { appliedDate, followUpDate, jobUrl, location, description, ...rest } = parsed.data;
 
     const job = await prisma.jobApplication.update({
       where: { id },
@@ -56,6 +56,8 @@ export async function PUT(
           ? { followUpDate: followUpDate ? new Date(followUpDate) : null }
           : {}),
         ...(jobUrl !== undefined ? { jobUrl: jobUrl || null } : {}),
+        ...(location !== undefined ? { location: location || null } : {}),
+        ...(description !== undefined ? { description: description || null } : {}),
       },
     });
 

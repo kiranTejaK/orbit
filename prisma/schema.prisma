@@ -38,6 +38,8 @@ model JobApplication {
   appliedDate   DateTime
   status        String    @default("Applied")
   salary        String?
+  location      String?
+  description   String?
   hrName        String?
   hrContact     String?
   followUpDate  DateTime?

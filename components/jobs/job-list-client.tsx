@@ -46,6 +46,8 @@ export function JobListClient() {
         ...data,
         jobUrl: data.jobUrl || undefined,
         followUpDate: data.followUpDate || undefined,
+        location: data.location || undefined,
+        description: data.description || undefined,
       });
       toast.success("Application added!");
       setFormOpen(false);
@@ -62,6 +64,8 @@ export function JobListClient() {
         ...data,
         jobUrl: data.jobUrl || undefined,
         followUpDate: data.followUpDate || undefined,
+        location: data.location || undefined,
+        description: data.description || undefined,
       });
       toast.success("Application updated!");
       setEditJob(undefined);
@@ -96,7 +100,7 @@ export function JobListClient() {
               id="job-search"
               value={search}
               onChange={setSearch}
-              placeholder="Search by company, position, notes…"
+              placeholder="Search by company, position, location, notes…"
             />
           </div>
           <button
@@ -126,10 +130,10 @@ export function JobListClient() {
         className="rounded-xl overflow-x-auto w-full"
         style={{ border: "1px solid var(--border)" }}
       >
-        <table className="w-full min-w-[680px]">
+        <table className="w-full min-w-[760px]">
           <thead>
             <tr style={{ background: "var(--muted-bg)", borderBottom: "1px solid var(--border)" }}>
-              {["Company", "Position", "Status", "Applied", "Follow-up", "Source", "Actions"].map((h) => (
+              {["Company", "Position", "Location", "Status", "Applied", "Follow-up", "Source", "Actions"].map((h) => (
                 <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide whitespace-nowrap" style={{ color: "var(--muted)" }}>
                   {h}
                 </th>
@@ -138,10 +142,10 @@ export function JobListClient() {
           </thead>
           <tbody>
             {loading ? (
-              Array.from({ length: 6 }).map((_, i) => <TableRowSkeleton key={i} cols={7} />)
+              Array.from({ length: 6 }).map((_, i) => <TableRowSkeleton key={i} cols={8} />)
             ) : jobs.length === 0 ? (
               <tr>
-                <td colSpan={7} className="py-0">
+                <td colSpan={8} className="py-0">
                   <EmptyState
                     icon={Briefcase}
                     title="No applications found"
@@ -178,6 +182,9 @@ export function JobListClient() {
                   </td>
                   <td className="px-4 py-3 text-sm whitespace-nowrap" style={{ color: "var(--muted)" }}>
                     {job.position}
+                  </td>
+                  <td className="px-4 py-3 text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>
+                    {job.location || "—"}
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap">
                     <JobStatusBadge status={job.status} />
