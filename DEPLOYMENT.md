@@ -103,7 +103,7 @@ Standard PostgreSQL connection strings use URL parsing rules. If your database p
    - `ADMIN_USERNAME` = `admin`
    - `ADMIN_PASSWORD` = `<your-secure-password>`
    - `NEXTAUTH_SECRET` = `<32-char-random-string>`
-   - `NEXTAUTH_URL` = `https://your-app.vercel.app`
+   - `NEXTAUTH_URL` = `https://productivity-hub.vercel.app`
 4. Click **Deploy**.
 
 #### Option B: Vercel CLI

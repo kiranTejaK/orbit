@@ -110,8 +110,8 @@ export function ResourceListClient() {
     <>
       {/* Toolbar */}
       <div className="flex flex-col gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="flex-1">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div className="flex-1 min-w-0">
             <SearchInput
               id="resource-search"
               value={search}
@@ -119,47 +119,49 @@ export function ResourceListClient() {
               placeholder="Search resources by title, description, tags…"
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-between sm:justify-start">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setViewMode("grid")}
+                className="w-10 h-10 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg transition-all"
+                style={{
+                  background: viewMode === "grid" ? "var(--accent)" : "var(--muted-bg)",
+                  color: viewMode === "grid" ? "#fff" : "var(--muted)",
+                  border: "1px solid var(--border)",
+                }}
+                aria-label="Grid view"
+                id="view-grid"
+              >
+                <LayoutGrid size={16} />
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className="w-10 h-10 sm:w-9 sm:h-9 flex items-center justify-center rounded-lg transition-all"
+                style={{
+                  background: viewMode === "list" ? "var(--accent)" : "var(--muted-bg)",
+                  color: viewMode === "list" ? "#fff" : "var(--muted)",
+                  border: "1px solid var(--border)",
+                }}
+                aria-label="List view"
+                id="view-list"
+              >
+                <List size={16} />
+              </button>
+            </div>
             <button
-              onClick={() => setViewMode("grid")}
-              className="w-9 h-9 flex items-center justify-center rounded-lg transition-all"
+              id="add-resource-btn"
+              onClick={() => { setEditResource(undefined); setFormOpen(true); }}
+              className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl text-sm font-semibold transition-all min-h-[40px] sm:min-h-[36px]"
               style={{
-                background: viewMode === "grid" ? "var(--accent)" : "var(--muted-bg)",
-                color: viewMode === "grid" ? "#fff" : "var(--muted)",
-                border: "1px solid var(--border)",
+                background: "var(--accent)",
+                color: "#fff",
+                boxShadow: "0 0 20px rgba(99,102,241,0.3)",
               }}
-              aria-label="Grid view"
-              id="view-grid"
             >
-              <LayoutGrid size={16} />
-            </button>
-            <button
-              onClick={() => setViewMode("list")}
-              className="w-9 h-9 flex items-center justify-center rounded-lg transition-all"
-              style={{
-                background: viewMode === "list" ? "var(--accent)" : "var(--muted-bg)",
-                color: viewMode === "list" ? "#fff" : "var(--muted)",
-                border: "1px solid var(--border)",
-              }}
-              aria-label="List view"
-              id="view-list"
-            >
-              <List size={16} />
+              <Plus size={16} />
+              Add Resource
             </button>
           </div>
-          <button
-            id="add-resource-btn"
-            onClick={() => { setEditResource(undefined); setFormOpen(true); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
-            style={{
-              background: "var(--accent)",
-              color: "#fff",
-              boxShadow: "0 0 20px rgba(99,102,241,0.3)",
-            }}
-          >
-            <Plus size={16} />
-            Add Resource
-          </button>
         </div>
 
         <ResourceFilters
@@ -187,7 +189,7 @@ export function ResourceListClient() {
           action={
             <button
               onClick={() => { setEditResource(undefined); setFormOpen(true); }}
-              className="px-5 py-2.5 rounded-xl text-sm font-semibold"
+              className="px-5 py-2.5 rounded-xl text-sm font-semibold min-h-[44px]"
               style={{ background: "var(--accent)", color: "#fff" }}
             >
               Add your first resource
@@ -208,10 +210,10 @@ export function ResourceListClient() {
         </div>
       ) : (
         <div
-          className="rounded-xl overflow-hidden"
+          className="rounded-xl overflow-x-auto w-full"
           style={{ border: "1px solid var(--border)" }}
         >
-          <table className="w-full">
+          <table className="w-full min-w-[650px]">
             <thead>
               <tr style={{ background: "var(--muted-bg)", borderBottom: "1px solid var(--border)" }}>
                 {["Title", "Type", "Category", "Tags", "Fav", "Actions"].map((h) => (
@@ -235,16 +237,16 @@ export function ResourceListClient() {
                       {r.title.length > 50 ? r.title.slice(0, 50) + "…" : r.title}
                     </a>
                   </td>
-                  <td className="px-4 py-3 text-xs" style={{ color: "var(--muted)" }}>{r.resourceType}</td>
-                  <td className="px-4 py-3 text-xs" style={{ color: "var(--muted)" }}>{r.category || "—"}</td>
+                  <td className="px-4 py-3 text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>{r.resourceType}</td>
+                  <td className="px-4 py-3 text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>{r.category || "—"}</td>
                   <td className="px-4 py-3 text-xs" style={{ color: "var(--muted)" }}>{r.tags.slice(0, 3).join(", ") || "—"}</td>
-                  <td className="px-4 py-3 text-xs" style={{ color: r.favorite ? "#f59e0b" : "var(--muted)" }}>
+                  <td className="px-4 py-3 text-xs whitespace-nowrap" style={{ color: r.favorite ? "#f59e0b" : "var(--muted)" }}>
                     {r.favorite ? "★" : "☆"}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => { setEditResource(r); setFormOpen(true); }} className="text-xs px-2 py-1 rounded-lg" style={{ background: "var(--muted-bg)", color: "var(--foreground)", border: "1px solid var(--border)" }}>Edit</button>
-                      <button onClick={() => setDeleteTarget(r)} className="text-xs px-2 py-1 rounded-lg" style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}>Del</button>
+                      <button onClick={() => { setEditResource(r); setFormOpen(true); }} className="text-xs px-2.5 py-1.5 rounded-lg font-medium" style={{ background: "var(--muted-bg)", color: "var(--foreground)", border: "1px solid var(--border)" }}>Edit</button>
+                      <button onClick={() => setDeleteTarget(r)} className="text-xs px-2.5 py-1.5 rounded-lg font-medium" style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}>Del</button>
                     </div>
                   </td>
                 </tr>

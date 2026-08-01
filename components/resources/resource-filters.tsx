@@ -21,6 +21,7 @@ const selectStyle = {
   padding: "8px 12px",
   fontSize: "13px",
   outline: "none",
+  minHeight: "40px",
 };
 
 export function ResourceFilters({
@@ -34,11 +35,12 @@ export function ResourceFilters({
   onSortChange,
 }: ResourceFiltersProps) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
       <select
         id="filter-type"
         value={type}
         onChange={(e) => onTypeChange(e.target.value)}
+        className="w-full sm:w-auto flex-1 sm:flex-none"
         style={selectStyle}
         aria-label="Filter by type"
       >
@@ -52,6 +54,7 @@ export function ResourceFilters({
         id="filter-category"
         value={category}
         onChange={(e) => onCategoryChange(e.target.value)}
+        className="w-full sm:w-auto flex-1 sm:flex-none"
         style={selectStyle}
         aria-label="Filter by category"
       >
@@ -65,6 +68,7 @@ export function ResourceFilters({
         id="sort-resources"
         value={sort}
         onChange={(e) => onSortChange(e.target.value)}
+        className="w-full sm:w-auto flex-1 sm:flex-none"
         style={selectStyle}
         aria-label="Sort resources"
       >
@@ -75,7 +79,7 @@ export function ResourceFilters({
 
       <button
         onClick={() => onFavoriteChange(!favorite)}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-all"
+        className="flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all w-full sm:w-auto min-h-[40px]"
         style={{
           background: favorite ? "rgba(245,158,11,0.15)" : "var(--muted-bg)",
           color: favorite ? "#f59e0b" : "var(--muted)",

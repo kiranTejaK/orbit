@@ -37,7 +37,7 @@ export default async function ResourceDetailPage({ params }: Props) {
       <div className="max-w-3xl mx-auto">
         <Link
           href="/resources"
-          className="inline-flex items-center gap-2 text-sm mb-6 transition-all"
+          className="inline-flex items-center gap-2 text-sm mb-6 transition-all min-h-[40px]"
           style={{ color: "var(--muted)" }}
         >
           <ArrowLeft size={16} />
@@ -45,12 +45,12 @@ export default async function ResourceDetailPage({ params }: Props) {
         </Link>
 
         <div
-          className="rounded-2xl p-8"
+          className="rounded-2xl p-4 sm:p-6 lg:p-8"
           style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 mb-6">
-            <div className="flex-1">
+          <div className="flex flex-col sm:flex-row items-start justify-between gap-4 mb-6">
+            <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-3">
                 <ResourceTypeBadge type={resource.resourceType} size="md" />
                 {resource.favorite && (
@@ -59,7 +59,7 @@ export default async function ResourceDetailPage({ params }: Props) {
                   </span>
                 )}
               </div>
-              <h1 className="text-2xl font-bold leading-snug" style={{ color: "var(--foreground)" }}>
+              <h1 className="text-xl sm:text-2xl font-bold leading-snug break-words" style={{ color: "var(--foreground)" }}>
                 {resource.title}
               </h1>
             </div>
@@ -67,7 +67,7 @@ export default async function ResourceDetailPage({ params }: Props) {
               href={resource.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold flex-shrink-0 transition-all"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold flex-shrink-0 transition-all w-full sm:w-auto min-h-[44px]"
               style={{ background: "var(--accent)", color: "#fff" }}
             >
               <ExternalLink size={15} />
@@ -76,42 +76,42 @@ export default async function ResourceDetailPage({ params }: Props) {
           </div>
 
           {/* Meta grid */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "var(--muted-bg)" }}>
-              <Globe size={16} style={{ color: "var(--muted)" }} />
-              <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+            <div className="flex items-center gap-3 p-3 rounded-xl min-w-0" style={{ background: "var(--muted-bg)" }}>
+              <Globe size={16} className="flex-shrink-0" style={{ color: "var(--muted)" }} />
+              <div className="min-w-0 flex-1">
                 <p className="text-xs" style={{ color: "var(--muted)" }}>URL</p>
-                <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium truncate block max-w-xs hover:underline" style={{ color: "var(--accent)" }}>
+                <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium truncate block hover:underline" style={{ color: "var(--accent)" }}>
                   {resource.url}
                 </a>
               </div>
             </div>
 
             {resource.category && (
-              <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "var(--muted-bg)" }}>
-                <Tag size={16} style={{ color: "var(--muted)" }} />
-                <div>
+              <div className="flex items-center gap-3 p-3 rounded-xl min-w-0" style={{ background: "var(--muted-bg)" }}>
+                <Tag size={16} className="flex-shrink-0" style={{ color: "var(--muted)" }} />
+                <div className="min-w-0 flex-1">
                   <p className="text-xs" style={{ color: "var(--muted)" }}>Category</p>
-                  <p className="text-sm font-medium" style={{ color: "var(--foreground)" }}>{resource.category}</p>
+                  <p className="text-sm font-medium truncate" style={{ color: "var(--foreground)" }}>{resource.category}</p>
                 </div>
               </div>
             )}
 
             {resource.source && (
-              <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "var(--muted-bg)" }}>
-                <Globe size={16} style={{ color: "var(--muted)" }} />
-                <div>
+              <div className="flex items-center gap-3 p-3 rounded-xl min-w-0" style={{ background: "var(--muted-bg)" }}>
+                <Globe size={16} className="flex-shrink-0" style={{ color: "var(--muted)" }} />
+                <div className="min-w-0 flex-1">
                   <p className="text-xs" style={{ color: "var(--muted)" }}>Source</p>
-                  <p className="text-sm font-medium" style={{ color: "var(--foreground)" }}>{resource.source}</p>
+                  <p className="text-sm font-medium truncate" style={{ color: "var(--foreground)" }}>{resource.source}</p>
                 </div>
               </div>
             )}
 
-            <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "var(--muted-bg)" }}>
-              <Calendar size={16} style={{ color: "var(--muted)" }} />
-              <div>
+            <div className="flex items-center gap-3 p-3 rounded-xl min-w-0" style={{ background: "var(--muted-bg)" }}>
+              <Calendar size={16} className="flex-shrink-0" style={{ color: "var(--muted)" }} />
+              <div className="min-w-0 flex-1">
                 <p className="text-xs" style={{ color: "var(--muted)" }}>Added</p>
-                <p className="text-sm font-medium" style={{ color: "var(--foreground)" }}>
+                <p className="text-sm font-medium truncate" style={{ color: "var(--foreground)" }}>
                   {formatDate(resource.createdAt)} · {formatRelative(resource.createdAt)}
                 </p>
               </div>
@@ -136,7 +136,7 @@ export default async function ResourceDetailPage({ params }: Props) {
           {resource.description && (
             <div className="mb-6">
               <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "var(--muted)" }}>Description</p>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--foreground)" }}>{resource.description}</p>
+              <p className="text-sm leading-relaxed break-words" style={{ color: "var(--foreground)" }}>{resource.description}</p>
             </div>
           )}
 
@@ -148,7 +148,7 @@ export default async function ResourceDetailPage({ params }: Props) {
                 <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--muted)" }}>Personal Notes</p>
               </div>
               <div className="p-4 rounded-xl" style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.15)" }}>
-                <p className="text-sm leading-relaxed whitespace-pre-wrap" style={{ color: "var(--foreground)" }}>
+                <p className="text-sm leading-relaxed whitespace-pre-wrap break-words" style={{ color: "var(--foreground)" }}>
                   {resource.personalNotes}
                 </p>
               </div>

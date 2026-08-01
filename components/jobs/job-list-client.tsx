@@ -90,8 +90,8 @@ export function JobListClient() {
     <>
       {/* Toolbar */}
       <div className="flex flex-col gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="flex-1">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div className="flex-1 min-w-0">
             <SearchInput
               id="job-search"
               value={search}
@@ -102,7 +102,7 @@ export function JobListClient() {
           <button
             id="add-job-btn"
             onClick={() => { setEditJob(undefined); setFormOpen(true); }}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-xl text-sm font-semibold transition-all min-h-[40px] sm:min-h-[36px]"
             style={{
               background: "var(--accent)",
               color: "#fff",
@@ -123,14 +123,14 @@ export function JobListClient() {
 
       {/* Table */}
       <div
-        className="rounded-xl overflow-hidden"
+        className="rounded-xl overflow-x-auto w-full"
         style={{ border: "1px solid var(--border)" }}
       >
-        <table className="w-full">
+        <table className="w-full min-w-[680px]">
           <thead>
             <tr style={{ background: "var(--muted-bg)", borderBottom: "1px solid var(--border)" }}>
               {["Company", "Position", "Status", "Applied", "Follow-up", "Source", "Actions"].map((h) => (
-                <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide" style={{ color: "var(--muted)" }}>
+                <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide whitespace-nowrap" style={{ color: "var(--muted)" }}>
                   {h}
                 </th>
               ))}
@@ -149,7 +149,7 @@ export function JobListClient() {
                     action={
                       <button
                         onClick={() => { setEditJob(undefined); setFormOpen(true); }}
-                        className="px-5 py-2.5 rounded-xl text-sm font-semibold"
+                        className="px-5 py-2.5 rounded-xl text-sm font-semibold min-h-[44px]"
                         style={{ background: "var(--accent)", color: "#fff" }}
                       >
                         Add your first application
@@ -167,7 +167,7 @@ export function JobListClient() {
                     borderBottom: "1px solid var(--border)",
                   }}
                 >
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <Link
                       href={`/jobs/${job.id}`}
                       className="font-semibold text-sm hover:underline"
@@ -176,19 +176,19 @@ export function JobListClient() {
                       {job.company}
                     </Link>
                   </td>
-                  <td className="px-4 py-3 text-sm" style={{ color: "var(--muted)" }}>
+                  <td className="px-4 py-3 text-sm whitespace-nowrap" style={{ color: "var(--muted)" }}>
                     {job.position}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <JobStatusBadge status={job.status} />
                   </td>
-                  <td className="px-4 py-3 text-xs" style={{ color: "var(--muted)" }}>
+                  <td className="px-4 py-3 text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>
                     {formatDate(job.appliedDate)}
                   </td>
-                  <td className="px-4 py-3 text-xs" style={{ color: "var(--muted)" }}>
+                  <td className="px-4 py-3 text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>
                     {job.followUpDate ? formatDate(job.followUpDate) : "—"}
                   </td>
-                  <td className="px-4 py-3 text-xs" style={{ color: "var(--muted)" }}>
+                  <td className="px-4 py-3 text-xs whitespace-nowrap" style={{ color: "var(--muted)" }}>
                     {job.source || "—"}
                     {job.jobUrl && (
                       <a href={job.jobUrl} target="_blank" rel="noopener noreferrer" className="ml-1 inline-flex" style={{ color: "var(--accent)" }}>
@@ -196,18 +196,18 @@ export function JobListClient() {
                       </a>
                     )}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => { setEditJob(job); setFormOpen(true); }}
-                        className="text-xs px-2 py-1 rounded-lg"
+                        className="text-xs px-2.5 py-1.5 rounded-lg font-medium"
                         style={{ background: "var(--muted-bg)", color: "var(--foreground)", border: "1px solid var(--border)" }}
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => setDeleteTarget(job)}
-                        className="text-xs px-2 py-1 rounded-lg"
+                        className="text-xs px-2.5 py-1.5 rounded-lg font-medium"
                         style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}
                       >
                         Del

@@ -30,9 +30,14 @@ export function Pagination({
     cursor: disabled ? "not-allowed" : "pointer",
     borderRadius: "8px",
     padding: "6px 12px",
+    minWidth: "36px",
+    minHeight: "36px",
     fontSize: "14px",
     fontWeight: active ? 600 : 400,
     transition: "all 0.15s",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
   });
 
   const pages = Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
@@ -43,11 +48,11 @@ export function Pagination({
   });
 
   return (
-    <div className="flex items-center justify-between pt-4">
-      <p className="text-sm" style={{ color: "var(--muted)" }}>
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4">
+      <p className="text-sm text-center sm:text-left" style={{ color: "var(--muted)" }}>
         Showing {start}–{end} of {total}
       </p>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 flex-wrap justify-center">
         <button
           onClick={() => onPageChange(page - 1)}
           disabled={page === 1}

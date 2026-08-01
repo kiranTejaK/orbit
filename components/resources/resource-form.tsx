@@ -25,6 +25,7 @@ const inputStyle = {
   fontSize: "14px",
   width: "100%",
   outline: "none",
+  minHeight: "44px",
 };
 
 const labelStyle = {
@@ -83,32 +84,40 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
       <div
-        className="absolute inset-0"
+        className="fixed inset-0"
         style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}
         onClick={onClose}
+        aria-hidden="true"
       />
       <div
-        className="relative w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh] my-auto z-10 overflow-hidden"
         style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
+        role="dialog"
+        aria-modal="true"
       >
         {/* Header */}
         <div
-          className="flex items-center justify-between px-6 py-4 flex-shrink-0"
+          className="flex items-center justify-between px-4 sm:px-6 py-4 flex-shrink-0"
           style={{ borderBottom: "1px solid var(--border)" }}
         >
           <h2 className="text-base font-semibold" style={{ color: "var(--foreground)" }}>
             {mode === "create" ? "Add Resource" : "Edit Resource"}
           </h2>
-          <button onClick={onClose} style={{ color: "var(--muted)" }} aria-label="Close">
+          <button
+            onClick={onClose}
+            className="w-9 h-9 flex items-center justify-center rounded-xl transition-all"
+            style={{ color: "var(--muted)", background: "var(--muted-bg)" }}
+            aria-label="Close dialog"
+          >
             <X size={18} />
           </button>
         </div>
 
         {/* Body */}
-        <form onSubmit={handleSubmit(onFormSubmit)} className="overflow-y-auto">
-          <div className="p-6 space-y-4">
+        <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col min-h-0 flex-1">
+          <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
             {/* Title */}
             <div>
               <label style={labelStyle}>Title *</label>
@@ -128,7 +137,7 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
             </div>
 
             {/* Type + Category */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label style={labelStyle}>Resource Type *</label>
                 <select {...register("resourceType")} style={inputStyle}>
@@ -172,7 +181,7 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
             </div>
 
             {/* Tags + Source */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label style={labelStyle}>Tags (comma-separated)</label>
                 <input {...register("tags")} style={inputStyle} placeholder="react, typescript, ai" />
@@ -184,14 +193,14 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
             </div>
 
             {/* Favorite */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 py-1">
               <input
                 type="checkbox"
                 id="resource-favorite"
                 {...register("favorite")}
-                className="w-4 h-4 rounded"
+                className="w-5 h-5 rounded accent-indigo-600"
               />
-              <label htmlFor="resource-favorite" className="text-sm" style={{ color: "var(--foreground)" }}>
+              <label htmlFor="resource-favorite" className="text-sm font-medium cursor-pointer" style={{ color: "var(--foreground)" }}>
                 Mark as favorite
               </label>
             </div>
@@ -199,13 +208,13 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
 
           {/* Footer */}
           <div
-            className="flex justify-end gap-3 px-6 py-4 flex-shrink-0"
+            className="flex flex-col-reverse sm:flex-row justify-end gap-3 px-4 sm:px-6 py-4 flex-shrink-0"
             style={{ borderTop: "1px solid var(--border)" }}
           >
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-sm font-medium"
+              className="px-4 py-2.5 rounded-xl text-sm font-medium w-full sm:w-auto min-h-[44px]"
               style={{ background: "var(--muted-bg)", color: "var(--foreground)", border: "1px solid var(--border)" }}
             >
               Cancel
@@ -213,7 +222,7 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 rounded-xl text-sm font-semibold transition-all"
+              className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all w-full sm:w-auto min-h-[44px]"
               style={{
                 background: "var(--accent)",
                 color: "#fff",

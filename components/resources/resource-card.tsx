@@ -40,7 +40,7 @@ export function ResourceCard({
 
   return (
     <div
-      className="rounded-xl p-5 flex flex-col gap-3 hover-lift relative"
+      className="rounded-xl p-4 sm:p-5 flex flex-col gap-3 hover-lift relative min-w-0"
       style={{
         background: "var(--card-bg)",
         border: "1px solid var(--border)",
@@ -52,7 +52,7 @@ export function ResourceCard({
           <ResourceTypeBadge type={resource.resourceType} />
           <Link
             href={`/resources/${resource.id}`}
-            className="block mt-2 font-semibold text-sm leading-snug hover:underline line-clamp-2"
+            className="block mt-2 font-semibold text-sm leading-snug hover:underline line-clamp-2 break-words"
             style={{ color: "var(--foreground)" }}
           >
             {resource.title}
@@ -63,21 +63,21 @@ export function ResourceCard({
           <button
             onClick={handleToggleFav}
             disabled={favLoading}
-            className="w-7 h-7 flex items-center justify-center rounded-lg transition-all"
+            className="w-8 h-8 sm:w-7 sm:h-7 flex items-center justify-center rounded-lg transition-all"
             style={{ color: resource.favorite ? "#f59e0b" : "var(--muted)" }}
             title={resource.favorite ? "Unfavorite" : "Favorite"}
             aria-label="Toggle favorite"
           >
-            <Star size={15} fill={resource.favorite ? "currentColor" : "none"} />
+            <Star size={16} fill={resource.favorite ? "currentColor" : "none"} />
           </button>
           <div className="relative">
             <button
               onClick={() => setMenuOpen((o) => !o)}
-              className="w-7 h-7 flex items-center justify-center rounded-lg transition-all"
+              className="w-8 h-8 sm:w-7 sm:h-7 flex items-center justify-center rounded-lg transition-all"
               style={{ color: "var(--muted)" }}
               aria-label="More options"
             >
-              <MoreVertical size={15} />
+              <MoreVertical size={16} />
             </button>
             {menuOpen && (
               <>
@@ -92,21 +92,21 @@ export function ResourceCard({
                 >
                   <button
                     onClick={() => { onEdit(resource); setMenuOpen(false); }}
-                    className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-[var(--muted-bg)] transition-all"
+                    className="flex items-center gap-2 w-full px-3 py-2.5 text-sm hover:bg-[var(--muted-bg)] transition-all min-h-[40px]"
                     style={{ color: "var(--foreground)" }}
                   >
                     <Pencil size={14} /> Edit
                   </button>
                   <button
                     onClick={handleCopy}
-                    className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-[var(--muted-bg)] transition-all"
+                    className="flex items-center gap-2 w-full px-3 py-2.5 text-sm hover:bg-[var(--muted-bg)] transition-all min-h-[40px]"
                     style={{ color: "var(--foreground)" }}
                   >
                     <Copy size={14} /> Copy link
                   </button>
                   <button
                     onClick={() => { window.open(resource.url, "_blank"); setMenuOpen(false); }}
-                    className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-[var(--muted-bg)] transition-all"
+                    className="flex items-center gap-2 w-full px-3 py-2.5 text-sm hover:bg-[var(--muted-bg)] transition-all min-h-[40px]"
                     style={{ color: "var(--foreground)" }}
                   >
                     <ExternalLink size={14} /> Open URL
@@ -114,7 +114,7 @@ export function ResourceCard({
                   <div style={{ borderTop: "1px solid var(--border)", margin: "4px 0" }} />
                   <button
                     onClick={() => { onDelete(resource); setMenuOpen(false); }}
-                    className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-[var(--muted-bg)] transition-all"
+                    className="flex items-center gap-2 w-full px-3 py-2.5 text-sm hover:bg-[var(--muted-bg)] transition-all min-h-[40px]"
                     style={{ color: "#ef4444" }}
                   >
                     <Trash2 size={14} /> Delete
@@ -128,7 +128,7 @@ export function ResourceCard({
 
       {/* Description */}
       {resource.description && (
-        <p className="text-xs leading-relaxed" style={{ color: "var(--muted)" }}>
+        <p className="text-xs leading-relaxed break-words" style={{ color: "var(--muted)" }}>
           {truncate(resource.description, 120)}
         </p>
       )}
@@ -139,7 +139,7 @@ export function ResourceCard({
           {resource.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
-              className="text-xs px-2 py-0.5 rounded-full"
+              className="text-xs px-2 py-0.5 rounded-full break-all"
               style={{
                 background: "var(--muted-bg)",
                 color: "var(--muted)",
@@ -158,15 +158,15 @@ export function ResourceCard({
       )}
 
       {/* Footer */}
-      <div className="flex items-center justify-between mt-auto pt-2" style={{ borderTop: "1px solid var(--border)" }}>
-        <span className="text-xs" style={{ color: "var(--muted)" }}>
+      <div className="flex items-center justify-between mt-auto pt-2 min-w-0" style={{ borderTop: "1px solid var(--border)" }}>
+        <span className="text-xs truncate max-w-[60%]" style={{ color: "var(--muted)" }}>
           {resource.category || getDomainFromUrl(resource.url)}
         </span>
         <a
           href={resource.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-xs transition-all"
+          className="flex items-center gap-1 text-xs transition-all py-1 px-1.5 rounded"
           style={{ color: "var(--accent)" }}
           onClick={(e) => e.stopPropagation()}
         >

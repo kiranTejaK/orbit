@@ -26,6 +26,7 @@ const inputStyle = {
   fontSize: "14px",
   width: "100%",
   outline: "none",
+  minHeight: "44px",
 };
 
 const labelStyle = {
@@ -86,32 +87,40 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
       <div
-        className="absolute inset-0"
+        className="fixed inset-0"
         style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}
         onClick={onClose}
+        aria-hidden="true"
       />
       <div
-        className="relative w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-2xl rounded-2xl shadow-2xl flex flex-col max-h-[90vh] my-auto z-10 overflow-hidden"
         style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
+        role="dialog"
+        aria-modal="true"
       >
         <div
-          className="flex items-center justify-between px-6 py-4 flex-shrink-0"
+          className="flex items-center justify-between px-4 sm:px-6 py-4 flex-shrink-0"
           style={{ borderBottom: "1px solid var(--border)" }}
         >
           <h2 className="text-base font-semibold" style={{ color: "var(--foreground)" }}>
             {mode === "create" ? "Add Application" : "Edit Application"}
           </h2>
-          <button onClick={onClose} style={{ color: "var(--muted)" }} aria-label="Close">
+          <button
+            onClick={onClose}
+            className="w-9 h-9 flex items-center justify-center rounded-xl transition-all"
+            style={{ color: "var(--muted)", background: "var(--muted-bg)" }}
+            aria-label="Close dialog"
+          >
             <X size={18} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="overflow-y-auto">
-          <div className="p-6 space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col min-h-0 flex-1">
+          <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
             {/* Company + Position */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label style={labelStyle}>Company *</label>
                 <input {...register("company")} style={inputStyle} placeholder="Company name" />
@@ -125,7 +134,7 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
             </div>
 
             {/* Status + Applied Date */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label style={labelStyle}>Status</label>
                 <select {...register("status")} style={inputStyle}>
@@ -142,7 +151,7 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
             </div>
 
             {/* Job URL + Source */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label style={labelStyle}>Job URL</label>
                 <input {...register("jobUrl")} style={inputStyle} placeholder="https://…" />
@@ -155,7 +164,7 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
             </div>
 
             {/* Salary + Resume Version */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label style={labelStyle}>Salary (CTC)</label>
                 <input {...register("salary")} style={inputStyle} placeholder="e.g. 12 LPA" />
@@ -167,7 +176,7 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
             </div>
 
             {/* HR Name + Contact */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label style={labelStyle}>HR Name</label>
                 <input {...register("hrName")} style={inputStyle} placeholder="HR contact name" />
@@ -196,13 +205,13 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
           </div>
 
           <div
-            className="flex justify-end gap-3 px-6 py-4 flex-shrink-0"
+            className="flex flex-col-reverse sm:flex-row justify-end gap-3 px-4 sm:px-6 py-4 flex-shrink-0"
             style={{ borderTop: "1px solid var(--border)" }}
           >
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-sm font-medium"
+              className="px-4 py-2.5 rounded-xl text-sm font-medium w-full sm:w-auto min-h-[44px]"
               style={{ background: "var(--muted-bg)", color: "var(--foreground)", border: "1px solid var(--border)" }}
             >
               Cancel
@@ -210,7 +219,7 @@ export function JobForm({ open, onClose, onSubmit, initialData, mode }: JobFormP
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 rounded-xl text-sm font-semibold"
+              className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all w-full sm:w-auto min-h-[44px]"
               style={{ background: "var(--accent)", color: "#fff", opacity: isSubmitting ? 0.7 : 1 }}
             >
               {isSubmitting ? "Saving…" : mode === "create" ? "Add Application" : "Save Changes"}

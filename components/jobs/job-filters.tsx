@@ -17,15 +17,17 @@ const selectStyle = {
   padding: "8px 12px",
   fontSize: "13px",
   outline: "none",
+  minHeight: "40px",
 };
 
 export function JobFilters({ status, sort, onStatusChange, onSortChange }: JobFiltersProps) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
       <select
         id="filter-job-status"
         value={status}
         onChange={(e) => onStatusChange(e.target.value)}
+        className="w-full sm:w-auto flex-1 sm:flex-none"
         style={selectStyle}
         aria-label="Filter by status"
       >
@@ -38,6 +40,7 @@ export function JobFilters({ status, sort, onStatusChange, onSortChange }: JobFi
         id="sort-jobs"
         value={sort}
         onChange={(e) => onSortChange(e.target.value)}
+        className="w-full sm:w-auto flex-1 sm:flex-none"
         style={selectStyle}
         aria-label="Sort jobs"
       >
