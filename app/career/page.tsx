@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Track your career applications, interview stages, and offers.",
 };
 
-export default function JobsPage() {
+export default function CareerPage() {
   return (
     <AppShell
       title="Career Tracker"

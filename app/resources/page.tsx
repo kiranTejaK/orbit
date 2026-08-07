@@ -3,9 +3,10 @@ import { AppShell } from "@/components/layout/app-shell";
 import { ResourceListClient } from "@/components/resources/resource-list-client";
 
 export const metadata: Metadata = {
-  title: "Resources | Productivity Hub",
-  description: "Browse and manage your resource library",
+  title: "Resources | Orbit",
+  description: "Browse and manage your Orbit resource library",
 };
+
 
 export default function ResourcesPage() {
   return (

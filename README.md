@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Orbit — Daily Planning, Knowledge & Career Suite
 
-## Getting Started
+Orbit is a modern, full-stack personal productivity application built with Next.js, Prisma, PostgreSQL, and Tailwind CSS. It combines daily todo planning, interactive calendar scheduling, searchable knowledge resource bookmarking, and career application tracking into a unified SaaS experience.
 
-First, run the development server:
+---
+
+## 🌟 Key Features
+
+### 📅 Daily Planner Module
+- **Daily Todo Management**: Create, edit, schedule, drag-and-drop, and complete tasks with priorities (Low, Medium, High, Urgent), tags, start dates, due dates, and rich markdown notes.
+- **Interactive Calendar**: Month view calendar highlighting today, selected dates, and task counts per date cell.
+- **Smart Sections**: Today's Tasks, Upcoming, Overdue, Completed Today, and No Due Date.
+- **Dashboard Widgets**: Interactive today's task checklist, completion progress ring, mini calendar, and summary metrics.
+
+### 💼 Career Module
+- Track career opportunities across stages (Applied, Shortlisted, Assessments, Technical Rounds, HR, Offers, Rejections).
+- Contact management, resume versioning, salary metrics, and follow-up reminders.
+
+### 📚 Resource Library
+- Searchable bookmark library for GitHub repos, AI tools, documentation, blogs, and system design materials.
+- Category filters, custom tags, and favorite toggles.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: NextAuth.js v5 (Credentials Provider)
+- **Styling**: Tailwind CSS v4 with glassmorphism design tokens & dark/light theme support
+- **UI & Icons**: Radix UI, Lucide React, Sonner Toasts
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- Node.js 20+
+- PostgreSQL database instance
+
+### 2. Environment Setup
+Create a `.env` file in the root directory:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/orbit_db"
+ADMIN_USERNAME="admin"
+ADMIN_PASSWORD="adminpassword"
+NEXTAUTH_SECRET="your-secure-nextauth-secret-key-32-chars"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+### 3. Installation & Database Migration
+
+```bash
+# Install dependencies
+npm install
+
+# Generate Prisma Client & apply migrations
+npm run db:generate
+npm run db:migrate:dev
+
+# Seed database with sample data
+npm run db:seed
+```
+
+### 4. Running Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🐳 Docker Support
 
-## Learn More
+Build and run Orbit using Docker:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Build Docker image
+docker build -t orbit-app .
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Run Docker container
+docker run -p 3000:3000 --env-file .env orbit-app
+```

@@ -1,6 +1,6 @@
 # IMPLEMENTATION.md — Technical Architecture & Implementation Specification
 
-## Project: Personal Productivity Hub (`resource-hub`)
+## Project: Orbit — Daily Planning, Knowledge & Career Suite (`orbit`)
 **Architect**: Senior Principal Software Architect & DevOps Lead  
 **Version**: 1.0.0  
 **Target Environment**: Vercel (Full-Stack Next.js Engine) + AlwaysData (Managed PostgreSQL)
@@ -10,7 +10,7 @@
 ## 1. Executive Summary & Core Principles
 
 ### 1.1 Purpose & Problem Statement
-The **Personal Productivity Hub** is a single-tenant, full-stack application designed to replace fragmented bookmarks, technical documentation screenshots, WhatsApp self-messages, and Excel job tracking spreadsheets with a unified, high-performance knowledge base and job search management platform.
+The **Orbit Platform** is a unified SaaS productivity suite combining Daily Planning, Knowledge Resource Management, and Career Application Tracking into a single, high-performance platform.
 
 ### 1.2 Non-Functional Requirements & Design Principles
 - **Single-Tenant Privacy & Zero-Footprint Security**: Engineered strictly for single-user operation. Authentication relies on bcrypt-hashed credentials stored in environment variables, backed by encrypted JWT sessions validated at the edge.

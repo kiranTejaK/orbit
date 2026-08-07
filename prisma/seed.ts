@@ -159,7 +159,124 @@ async function main() {
     }),
   ]);
 
-  console.log(`✅ Seeded ${resources.length} resources and ${jobs.length} job applications.`);
+  // Seed Daily Planner Todos
+  const now = new Date();
+  const todayStr = now.toISOString().split("T")[0];
+  const todayDate = new Date(`${todayStr}T09:00:00Z`);
+
+  const yesterdayDate = new Date(now);
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+
+  const tomorrowDate = new Date(now);
+  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+
+  const nextWeekDate = new Date(now);
+  nextWeekDate.setDate(nextWeekDate.getDate() + 5);
+
+  const todos = await Promise.all([
+    prisma.todo.upsert({
+      where: { id: "seed-t1" },
+      update: {},
+      create: {
+        id: "seed-t1",
+        title: "Review Orbit Rebrand Assets & Architecture",
+        description: "Verify vector icons, dark/light theme consistency, and responsive sidebar navigation.",
+        dueDate: todayDate,
+        startDate: todayDate,
+        priority: "HIGH",
+        status: "IN_PROGRESS",
+        notes: "Brand guidelines call for geometric ring/planet icon aesthetics.",
+        tags: ["branding", "orbit", "design"],
+      },
+    }),
+    prisma.todo.upsert({
+      where: { id: "seed-t2" },
+      update: {},
+      create: {
+        id: "seed-t2",
+        title: "Finalize Daily Planner Drag & Drop Module",
+        description: "Ensure smooth drag-and-drop between section containers on desktop and mobile.",
+        dueDate: todayDate,
+        startDate: todayDate,
+        priority: "URGENT",
+        status: "PENDING",
+        notes: "Use HTML5 drag-and-drop API with clean drag handle styling.",
+        tags: ["planner", "frontend", "ui"],
+      },
+    }),
+    prisma.todo.upsert({
+      where: { id: "seed-t3" },
+      update: {},
+      create: {
+        id: "seed-t3",
+        title: "Complete System Architecture Audit",
+        description: "Overdue review of microservices deployment configuration.",
+        dueDate: yesterdayDate,
+        startDate: yesterdayDate,
+        priority: "HIGH",
+        status: "PENDING",
+        notes: "Needs urgent follow-up today.",
+        tags: ["architecture", "devops"],
+      },
+    }),
+    prisma.todo.upsert({
+      where: { id: "seed-t4" },
+      update: {},
+      create: {
+        id: "seed-t4",
+        title: "Prepare Sprint Demo Presentation",
+        description: "Slide deck covering Career module rebranding and Daily Planner features.",
+        dueDate: tomorrowDate,
+        startDate: todayDate,
+        priority: "MEDIUM",
+        status: "PENDING",
+        tags: ["meeting", "demo"],
+      },
+    }),
+    prisma.todo.upsert({
+      where: { id: "seed-t5" },
+      update: {},
+      create: {
+        id: "seed-t5",
+        title: "Setup Automated E2E Test Suite",
+        description: "Configure Playwright integration tests for main user workflows.",
+        dueDate: nextWeekDate,
+        priority: "LOW",
+        status: "PENDING",
+        tags: ["testing", "qa"],
+      },
+    }),
+    prisma.todo.upsert({
+      where: { id: "seed-t6" },
+      update: {},
+      create: {
+        id: "seed-t6",
+        title: "Morning Routine & Focus Planning",
+        description: "Set daily goals and review priority tasks.",
+        dueDate: todayDate,
+        priority: "MEDIUM",
+        status: "COMPLETED",
+        completedAt: new Date(),
+        tags: ["routine", "productivity"],
+      },
+    }),
+    prisma.todo.upsert({
+      where: { id: "seed-t7" },
+      update: {},
+      create: {
+        id: "seed-t7",
+        title: "Explore Raycast & Linear UI Interaction Patterns",
+        description: "Inspiration research for high-velocity keyboard shortcuts and micro-interactions.",
+        priority: "LOW",
+        status: "PENDING",
+        notes: "Check command palette and quick filter patterns.",
+        tags: ["research", "design-system"],
+      },
+    }),
+  ]);
+
+  console.log(`✅ Seeded ${resources.length} resources, ${jobs.length} career applications, and ${todos.length} planner todos.`);
+
 }
 
 main()

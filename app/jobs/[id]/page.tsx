@@ -18,7 +18,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const job = await prisma.jobApplication.findUnique({ where: { id }, select: { company: true, position: true } });
-  return { title: job ? `${job.position} at ${job.company} | Jobs` : "Application" };
+  return { title: job ? `${job.position} at ${job.company} | Orbit Career` : "Career Application" };
 }
 
 export default async function JobDetailPage({ params }: Props) {
@@ -39,16 +39,17 @@ export default async function JobDetailPage({ params }: Props) {
   const activeStatuses = JOB_STATUSES.slice(0, Math.min(statusIndex + 1, JOB_STATUSES.length));
 
   return (
-    <AppShell title="Application Detail">
+    <AppShell title="Career Application Detail">
       <div className="max-w-3xl mx-auto">
         <Link
-          href="/jobs"
+          href="/career"
           className="inline-flex items-center gap-2 text-sm mb-6 transition-all min-h-[40px]"
           style={{ color: "var(--muted)" }}
         >
           <ArrowLeft size={16} />
-          Back to Applications
+          Back to Career Tracker
         </Link>
+
 
         <div
           className="rounded-2xl p-4 sm:p-6 lg:p-8"

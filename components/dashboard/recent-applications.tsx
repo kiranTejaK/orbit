@@ -33,12 +33,13 @@ export function RecentApplications({ jobs }: RecentApplicationsProps) {
     >
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-sm" style={{ color: "var(--foreground)" }}>
-          Recent Applications
+          Recent Career Applications
         </h3>
-        <Link href="/jobs" className="text-xs transition-all" style={{ color: "var(--accent)" }}>
+        <Link href="/career" className="text-xs transition-all" style={{ color: "var(--accent)" }}>
           View all →
         </Link>
       </div>
+
       <div className="space-y-3">
         {jobs.map((job) => (
           <div

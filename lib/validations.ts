@@ -2,7 +2,7 @@
 // Zod schemas for form validation and API request bodies
 
 import { z } from "zod";
-import { RESOURCE_TYPES, JOB_STATUSES } from "./constants";
+import { RESOURCE_TYPES, JOB_STATUSES, TODO_PRIORITIES, TODO_STATUSES } from "./constants";
 
 // ──────────────────────────────────────────
 // Resource schemas
@@ -22,7 +22,6 @@ export const createResourceSchema = z.object({
 
 export const updateResourceSchema = createResourceSchema.partial();
 
-// API-level schema that accepts tags as an array
 export const resourceApiSchema = z.object({
   title: z.string().min(1).max(200),
   resourceType: z.enum(RESOURCE_TYPES),
@@ -60,7 +59,6 @@ export const createJobSchema = z.object({
 
 export const updateJobSchema = createJobSchema.partial();
 
-// API-level schemas with proper date types
 export const jobApiSchema = z.object({
   company: z.string().min(1).max(200),
   position: z.string().min(1).max(200),
@@ -81,6 +79,37 @@ export const jobApiSchema = z.object({
 export const updateJobApiSchema = jobApiSchema.partial();
 
 // ──────────────────────────────────────────
+// Todo / Daily Planner schemas
+// ──────────────────────────────────────────
+
+export const createTodoSchema = z.object({
+  title: z.string().min(1, "Title is required").max(300, "Title too long"),
+  description: z.string().max(2000, "Description too long").optional().or(z.literal("")),
+  dueDate: z.string().optional().or(z.literal("")),
+  startDate: z.string().optional().or(z.literal("")),
+  priority: z.enum(TODO_PRIORITIES).default("MEDIUM"),
+  status: z.enum(TODO_STATUSES).default("PENDING"),
+  notes: z.string().max(5000, "Notes too long").optional().or(z.literal("")),
+  tags: z.string().optional(),
+});
+
+export const updateTodoSchema = createTodoSchema.partial();
+
+export const todoApiSchema = z.object({
+  title: z.string().min(1).max(300),
+  description: z.string().max(2000).optional().nullable(),
+  dueDate: z.string().optional().nullable(),
+  startDate: z.string().optional().nullable(),
+  priority: z.enum(TODO_PRIORITIES).default("MEDIUM"),
+  status: z.enum(TODO_STATUSES).default("PENDING"),
+  notes: z.string().max(5000).optional().nullable(),
+  tags: z.array(z.string()).optional().default([]),
+  completedAt: z.string().optional().nullable(),
+});
+
+export const updateTodoApiSchema = todoApiSchema.partial();
+
+// ──────────────────────────────────────────
 // Helper: Parse tags string -> string[]
 // ──────────────────────────────────────────
 export function parseTags(tagsString?: string): string[] {
@@ -95,3 +124,5 @@ export type CreateResourceInput = z.infer<typeof createResourceSchema>;
 export type UpdateResourceInput = z.infer<typeof updateResourceSchema>;
 export type CreateJobInput = z.infer<typeof createJobSchema>;
 export type UpdateJobInput = z.infer<typeof updateJobSchema>;
+export type CreateTodoInput = z.infer<typeof createTodoSchema>;
+export type UpdateTodoInput = z.infer<typeof updateTodoSchema>;

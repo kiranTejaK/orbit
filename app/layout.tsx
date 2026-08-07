@@ -15,13 +15,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Productivity Hub",
-    template: "%s | Productivity Hub",
+    default: "Orbit",
+    template: "%s | Orbit",
   },
   description:
-    "Personal productivity hub — searchable resource library and job application tracker.",
-  keywords: ["productivity", "resources", "job tracker", "personal knowledge base"],
+    "Orbit — Personal Daily Planner, Knowledge Base & Career Management Platform.",
+  keywords: ["orbit", "daily planner", "productivity", "resources", "career tracker", "todo"],
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
+  manifest: "/manifest.json",
 };
+
 
 export default function RootLayout({
   children,

@@ -38,6 +38,20 @@ export function QuickAdd() {
     <>
       <div className="flex flex-wrap gap-3">
         <button
+          id="quick-add-task"
+          onClick={() => (window.location.href = "/planner")}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
+          style={{
+            background: "linear-gradient(135deg, #10b981, #059669)",
+            color: "#fff",
+            boxShadow: "0 4px 15px rgba(16,185,129,0.3)",
+          }}
+        >
+          <Plus size={16} />
+          New Daily Task
+        </button>
+
+        <button
           id="quick-add-resource"
           onClick={() => setResourceFormOpen(true)}
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
@@ -50,6 +64,7 @@ export function QuickAdd() {
           <Plus size={16} />
           Add Resource
         </button>
+
         <button
           id="quick-add-job"
           onClick={() => setJobFormOpen(true)}
@@ -61,9 +76,10 @@ export function QuickAdd() {
           }}
         >
           <Plus size={16} />
-          Add Application
+          Add Career Record
         </button>
       </div>
+
 
       <ResourceForm
         open={resourceFormOpen}

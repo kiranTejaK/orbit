@@ -1,6 +1,5 @@
-# DEPLOYMENT.md — Step-by-Step Deployment & Operations Manual
+## Project: Orbit — Daily Planning, Knowledge & Career Suite (`orbit`)
 
-## Project: Personal Productivity Hub (`resource-hub`)
 **DevOps Lead**: Senior Principal Software Architect & DevOps Lead  
 **Deployment Targets**: Vercel (Production Hosting) + AlwaysData (Managed PostgreSQL 16)
 

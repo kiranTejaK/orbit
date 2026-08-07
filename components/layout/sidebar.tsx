@@ -6,13 +6,14 @@ import {
   LayoutDashboard,
   BookMarked,
   Briefcase,
-  Zap,
+  CalendarCheck,
   ChevronRight,
   ChevronLeft,
   X,
 } from "lucide-react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useSidebar } from "./sidebar-context";
+import { OrbitIcon } from "@/components/shared/orbit-logo";
 
 const navItems = [
   {
@@ -21,16 +22,22 @@ const navItems = [
     icon: LayoutDashboard,
   },
   {
+    label: "Daily Planner",
+    href: "/planner",
+    icon: CalendarCheck,
+  },
+  {
     label: "Resources",
     href: "/resources",
     icon: BookMarked,
   },
   {
-    label: "Job Applications",
-    href: "/jobs",
+    label: "Career",
+    href: "/career",
     icon: Briefcase,
   },
 ];
+
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -134,26 +141,22 @@ export function Sidebar() {
           style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
         >
           <Link href="/" className="flex items-center gap-3 min-w-0">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{
-                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                boxShadow: "0 0 20px rgba(99,102,241,0.4)",
-              }}
-            >
-              <Zap size={18} className="text-white" />
-            </div>
+            <OrbitIcon size={32} />
             {!isCollapsed && (
               <div className="truncate">
-                <p className="font-bold text-sm" style={{ color: "var(--sidebar-fg)" }}>
-                  Productivity
+                <p className="font-extrabold text-base tracking-tight text-white flex items-center gap-1.5">
+                  Orbit
+                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                    PRO
+                  </span>
                 </p>
-                <p className="text-xs" style={{ color: "rgba(148,163,184,0.7)" }}>
-                  Hub
+                <p className="text-[11px]" style={{ color: "rgba(148,163,184,0.7)" }}>
+                  Daily Planner & Hub
                 </p>
               </div>
             )}
           </Link>
+
 
           {/* Collapse Toggle Button */}
           {!isCollapsed && (
@@ -242,24 +245,20 @@ export function Sidebar() {
               style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
             >
               <div className="flex items-center gap-3">
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center"
-                  style={{
-                    background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                    boxShadow: "0 0 20px rgba(99,102,241,0.4)",
-                  }}
-                >
-                  <Zap size={18} className="text-white" />
-                </div>
+                <OrbitIcon size={32} />
                 <div>
-                  <p className="font-bold text-sm" style={{ color: "var(--sidebar-fg)" }}>
-                    Productivity
+                  <p className="font-extrabold text-base tracking-tight text-white flex items-center gap-1.5">
+                    Orbit
+                    <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                      PRO
+                    </span>
                   </p>
-                  <p className="text-xs" style={{ color: "rgba(148,163,184,0.7)" }}>
-                    Hub
+                  <p className="text-[11px]" style={{ color: "rgba(148,163,184,0.7)" }}>
+                    Daily Planner & Hub
                   </p>
                 </div>
               </div>
+
               <button
                 onClick={closeMobile}
                 className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"

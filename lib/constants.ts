@@ -118,3 +118,55 @@ export const INTERVIEWING_STATUSES: JobStatus[] = [
 
 export const RESOURCES_PAGE_SIZE = 12;
 export const JOBS_PAGE_SIZE = 10;
+
+export const TODO_PRIORITIES = ["LOW", "MEDIUM", "HIGH", "URGENT"] as const;
+export type TodoPriority = (typeof TODO_PRIORITIES)[number];
+
+export const TODO_STATUSES = ["PENDING", "IN_PROGRESS", "COMPLETED"] as const;
+export type TodoStatus = (typeof TODO_STATUSES)[number];
+
+export const TODO_PRIORITY_COLORS: Record<string, { bg: string; text: string; border: string; dot: string }> = {
+  LOW: {
+    bg: "rgba(148, 163, 184, 0.1)",
+    text: "#94a3b8",
+    border: "rgba(148, 163, 184, 0.2)",
+    dot: "#94a3b8",
+  },
+  MEDIUM: {
+    bg: "rgba(99, 102, 241, 0.1)",
+    text: "#818cf8",
+    border: "rgba(99, 102, 241, 0.2)",
+    dot: "#6366f1",
+  },
+  HIGH: {
+    bg: "rgba(245, 158, 11, 0.1)",
+    text: "#fbbf24",
+    border: "rgba(245, 158, 11, 0.2)",
+    dot: "#f59e0b",
+  },
+  URGENT: {
+    bg: "rgba(239, 68, 68, 0.12)",
+    text: "#f87171",
+    border: "rgba(239, 68, 68, 0.3)",
+    dot: "#ef4444",
+  },
+};
+
+export const TODO_STATUS_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  PENDING: {
+    bg: "rgba(148, 163, 184, 0.1)",
+    text: "#94a3b8",
+    border: "rgba(148, 163, 184, 0.2)",
+  },
+  IN_PROGRESS: {
+    bg: "rgba(14, 165, 233, 0.12)",
+    text: "#38bdf8",
+    border: "rgba(14, 165, 233, 0.3)",
+  },
+  COMPLETED: {
+    bg: "rgba(16, 185, 129, 0.12)",
+    text: "#34d399",
+    border: "rgba(16, 185, 129, 0.3)",
+  },
+};
+

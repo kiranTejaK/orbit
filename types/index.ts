@@ -36,6 +36,34 @@ export interface JobApplication {
   updatedAt: string;
 }
 
+export type TodoPriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
+export type TodoStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED";
+
+export interface Todo {
+  id: string;
+  title: string;
+  description?: string | null;
+  dueDate?: string | null;
+  startDate?: string | null;
+  priority: TodoPriority;
+  status: TodoStatus;
+  notes?: string | null;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+  completedAt?: string | null;
+}
+
+export interface PlannerStats {
+  todayTotal: number;
+  todayCompleted: number;
+  upcomingTotal: number;
+  overdueTotal: number;
+  noDueDateTotal: number;
+  completionRate: number;
+  weeklyCompleted: number;
+}
+
 export interface PaginationMeta {
   page: number;
   pageSize: number;
@@ -66,6 +94,8 @@ export interface DashboardStats {
     offers: number;
     rejected: number;
   };
+  planner: PlannerStats;
 }
 
-export type SortOption = "newest" | "oldest" | "alpha" | "applied_desc" | "applied_asc";
+export type SortOption = "newest" | "oldest" | "alpha" | "applied_desc" | "applied_asc" | "dueDate_asc" | "dueDate_desc" | "priority_desc";
+
