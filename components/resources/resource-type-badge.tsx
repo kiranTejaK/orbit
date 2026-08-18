@@ -12,6 +12,7 @@ export function ResourceTypeBadge({ type, size = "sm" }: ResourceTypeBadgeProps)
   return (
     <span
       className={`inline-flex items-center rounded-full font-medium ${colorClass} ${sizeClass}`}
+      title={`Format: ${type}`}
     >
       {type}
     </span>

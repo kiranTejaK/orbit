@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Plus, LayoutGrid, List, BookMarked } from "lucide-react";
+import { Plus, LayoutGrid, List, BookMarked, Info, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import { Resource } from "@/types";
 import { useResources } from "@/hooks/use-resources";
 import { useDebounce } from "@/hooks/use-debounce";
 import { parseTags } from "@/lib/validations";
+import { RESOURCE_CLASSIFICATION_GUIDE } from "@/lib/constants";
 import { ResourceCard } from "./resource-card";
 import { ResourceForm } from "./resource-form";
 import { ResourceFilters } from "./resource-filters";
@@ -27,6 +28,7 @@ export function ResourceListClient() {
   const [sort, setSort] = useState("newest");
   const [page, setPage] = useState(1);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [showGuide, setShowGuide] = useState(false);
 
   const [formOpen, setFormOpen] = useState(false);
   const [editResource, setEditResource] = useState<Resource | undefined>();
@@ -147,6 +149,21 @@ export function ResourceListClient() {
               >
                 <List size={16} />
               </button>
+              <button
+                onClick={() => setShowGuide((prev) => !prev)}
+                className="flex items-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-medium transition-all"
+                style={{
+                  background: showGuide ? "rgba(99,102,241,0.15)" : "var(--muted-bg)",
+                  color: showGuide ? "var(--accent)" : "var(--muted)",
+                  border: `1px solid ${showGuide ? "rgba(99,102,241,0.3)" : "var(--border)"}`,
+                }}
+                aria-label="Toggle classification guide"
+                id="toggle-guide-btn"
+              >
+                <Info size={14} />
+                <span className="hidden xs:inline sm:inline">Guide & Boundaries</span>
+                {showGuide ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+              </button>
             </div>
             <button
               id="add-resource-btn"
@@ -163,6 +180,81 @@ export function ResourceListClient() {
             </button>
           </div>
         </div>
+
+        {/* Classification Guide Banner */}
+        {showGuide && (
+          <div
+            className="p-4 sm:p-5 rounded-2xl transition-all"
+            style={{
+              background: "rgba(99,102,241,0.06)",
+              border: "1px solid rgba(99,102,241,0.2)",
+            }}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Info size={18} className="text-indigo-500" />
+                <h3 className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>
+                  Resource Classification & Boundary Guidelines
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowGuide(false)}
+                className="text-xs text-muted hover:underline"
+                style={{ color: "var(--muted)" }}
+              >
+                Dismiss
+              </button>
+            </div>
+            <p className="text-xs mb-3 leading-relaxed" style={{ color: "var(--muted)" }}>
+              To keep your knowledge hub structured and avoid mixing up resource attributes, follow these clear boundary rules:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Format Guide */}
+              <div
+                className="p-3.5 rounded-xl"
+                style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-900/60 dark:text-indigo-200">
+                    Format (Delivery Medium)
+                  </span>
+                </div>
+                <p className="text-xs mb-2 font-medium" style={{ color: "var(--foreground)" }}>
+                  {RESOURCE_CLASSIFICATION_GUIDE.format.description}
+                </p>
+                <div className="flex flex-wrap gap-1 text-[11px]">
+                  {RESOURCE_CLASSIFICATION_GUIDE.format.examples.map((ex) => (
+                    <span key={ex} className="px-2 py-0.5 rounded" style={{ background: "var(--muted-bg)", color: "var(--muted)" }}>
+                      {ex}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Topic Guide */}
+              <div
+                className="p-3.5 rounded-xl"
+                style={{ background: "var(--card-bg)", border: "1px solid var(--border)" }}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200">
+                    Topic (Technical Domain)
+                  </span>
+                </div>
+                <p className="text-xs mb-2 font-medium" style={{ color: "var(--foreground)" }}>
+                  {RESOURCE_CLASSIFICATION_GUIDE.topic.description}
+                </p>
+                <div className="flex flex-wrap gap-1 text-[11px]">
+                  {RESOURCE_CLASSIFICATION_GUIDE.topic.examples.map((ex) => (
+                    <span key={ex} className="px-2 py-0.5 rounded" style={{ background: "var(--muted-bg)", color: "var(--muted)" }}>
+                      {ex}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <ResourceFilters
           type={type}
@@ -216,7 +308,7 @@ export function ResourceListClient() {
           <table className="w-full min-w-[650px]">
             <thead>
               <tr style={{ background: "var(--muted-bg)", borderBottom: "1px solid var(--border)" }}>
-                {["Title", "Type", "Category", "Tags", "Fav", "Actions"].map((h) => (
+                {["Title", "Format", "Topic", "Tags", "Fav", "Actions"].map((h) => (
                   <th key={h} className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide" style={{ color: "var(--muted)" }}>
                     {h}
                   </th>

@@ -17,14 +17,17 @@ async function main() {
   const resources = await Promise.all([
     prisma.resource.upsert({
       where: { id: "seed-r1" },
-      update: {},
+      update: {
+        resourceType: "Documentation",
+        category: "Frontend Development",
+      },
       create: {
         id: "seed-r1",
         title: "Next.js Documentation",
         resourceType: "Documentation",
         url: "https://nextjs.org/docs",
         description: "Official Next.js documentation covering App Router, Pages Router, and all APIs.",
-        category: "Frontend",
+        category: "Frontend Development",
         tags: ["nextjs", "react", "frontend", "documentation"],
         source: "Official",
         favorite: true,
@@ -32,14 +35,17 @@ async function main() {
     }),
     prisma.resource.upsert({
       where: { id: "seed-r2" },
-      update: {},
+      update: {
+        resourceType: "Documentation",
+        category: "Databases & Storage",
+      },
       create: {
         id: "seed-r2",
         title: "Prisma ORM Documentation",
         resourceType: "Documentation",
         url: "https://www.prisma.io/docs",
         description: "Prisma ORM — next-generation Node.js and TypeScript ORM.",
-        category: "Databases",
+        category: "Databases & Storage",
         tags: ["prisma", "orm", "database", "typescript"],
         source: "Official",
         favorite: false,
@@ -47,14 +53,17 @@ async function main() {
     }),
     prisma.resource.upsert({
       where: { id: "seed-r3" },
-      update: {},
+      update: {
+        resourceType: "Article / Blog",
+        category: "Frontend Development",
+      },
       create: {
         id: "seed-r3",
         title: "TypeScript Deep Dive",
-        resourceType: "Blog",
+        resourceType: "Article / Blog",
         url: "https://basarat.gitbook.io/typescript/",
         description: "Comprehensive TypeScript guide covering advanced patterns and real-world usage.",
-        category: "Frontend",
+        category: "Frontend Development",
         tags: ["typescript", "javascript", "programming"],
         personalNotes: "Great reference for complex type patterns",
         favorite: true,
@@ -62,14 +71,17 @@ async function main() {
     }),
     prisma.resource.upsert({
       where: { id: "seed-r4" },
-      update: {},
+      update: {
+        resourceType: "Library / Framework",
+        category: "UI/UX & Design Systems",
+      },
       create: {
         id: "seed-r4",
         title: "shadcn/ui",
-        resourceType: "Open Source Project",
+        resourceType: "Library / Framework",
         url: "https://ui.shadcn.com",
         description: "Beautifully designed components built with Radix UI and Tailwind CSS.",
-        category: "Frontend",
+        category: "UI/UX & Design Systems",
         tags: ["ui", "components", "react", "tailwind"],
         source: "GitHub",
         favorite: false,
@@ -77,14 +89,17 @@ async function main() {
     }),
     prisma.resource.upsert({
       where: { id: "seed-r5" },
-      update: {},
+      update: {
+        resourceType: "GitHub Repository",
+        category: "System Design & Architecture",
+      },
       create: {
         id: "seed-r5",
         title: "System Design Primer",
         resourceType: "GitHub Repository",
         url: "https://github.com/donnemartin/system-design-primer",
         description: "Learn how to design large-scale systems. Prep for the system design interview.",
-        category: "System Design",
+        category: "System Design & Architecture",
         tags: ["system-design", "interviews", "architecture", "scalability"],
         source: "GitHub",
         favorite: true,

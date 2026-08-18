@@ -1,6 +1,12 @@
 "use client";
 
-import { RESOURCE_TYPES, RESOURCE_CATEGORIES, RESOURCE_SORT_OPTIONS } from "@/lib/constants";
+import {
+  PRIMARY_RESOURCE_TYPES,
+  RESOURCE_TYPES,
+  PRIMARY_RESOURCE_CATEGORIES,
+  RESOURCE_CATEGORIES,
+  RESOURCE_SORT_OPTIONS,
+} from "@/lib/constants";
 
 interface ResourceFiltersProps {
   type: string;
@@ -34,36 +40,65 @@ export function ResourceFilters({
   onFavoriteChange,
   onSortChange,
 }: ResourceFiltersProps) {
+  const legacyTypes = RESOURCE_TYPES.filter(
+    (t) => !PRIMARY_RESOURCE_TYPES.includes(t as any)
+  );
+
+  const legacyCategories = RESOURCE_CATEGORIES.filter(
+    (c) => !PRIMARY_RESOURCE_CATEGORIES.includes(c as any)
+  );
+
   return (
     <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+      {/* Format Filter */}
       <select
         id="filter-type"
         value={type}
         onChange={(e) => onTypeChange(e.target.value)}
         className="w-full sm:w-auto flex-1 sm:flex-none"
         style={selectStyle}
-        aria-label="Filter by type"
+        aria-label="Filter by format"
       >
-        <option value="">All Types</option>
-        {RESOURCE_TYPES.map((t) => (
-          <option key={t} value={t}>{t}</option>
-        ))}
+        <option value="">All Formats</option>
+        <optgroup label="Format">
+          {PRIMARY_RESOURCE_TYPES.map((t) => (
+            <option key={t} value={t}>{t}</option>
+          ))}
+        </optgroup>
+        {legacyTypes.length > 0 && (
+          <optgroup label="Legacy Formats">
+            {legacyTypes.map((t) => (
+              <option key={t} value={t}>{t}</option>
+            ))}
+          </optgroup>
+        )}
       </select>
 
+      {/* Topic Filter */}
       <select
         id="filter-category"
         value={category}
         onChange={(e) => onCategoryChange(e.target.value)}
         className="w-full sm:w-auto flex-1 sm:flex-none"
         style={selectStyle}
-        aria-label="Filter by category"
+        aria-label="Filter by topic"
       >
-        <option value="">All Categories</option>
-        {RESOURCE_CATEGORIES.map((c) => (
-          <option key={c} value={c}>{c}</option>
-        ))}
+        <option value="">All Topics</option>
+        <optgroup label="Topic">
+          {PRIMARY_RESOURCE_CATEGORIES.map((c) => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </optgroup>
+        {legacyCategories.length > 0 && (
+          <optgroup label="Legacy Topics">
+            {legacyCategories.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </optgroup>
+        )}
       </select>
 
+      {/* Sort Filter */}
       <select
         id="sort-resources"
         value={sort}
@@ -77,6 +112,7 @@ export function ResourceFilters({
         ))}
       </select>
 
+      {/* Favorite Filter */}
       <button
         onClick={() => onFavoriteChange(!favorite)}
         className="flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all w-full sm:w-auto min-h-[40px]"
@@ -93,3 +129,4 @@ export function ResourceFilters({
     </div>
   );
 }
+

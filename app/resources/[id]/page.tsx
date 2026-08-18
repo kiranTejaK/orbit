@@ -87,11 +87,19 @@ export default async function ResourceDetailPage({ params }: Props) {
               </div>
             </div>
 
+            <div className="flex items-center gap-3 p-3 rounded-xl min-w-0" style={{ background: "var(--muted-bg)" }}>
+              <Tag size={16} className="flex-shrink-0" style={{ color: "var(--muted)" }} />
+              <div className="min-w-0 flex-1">
+                <p className="text-xs" style={{ color: "var(--muted)" }}>Format</p>
+                <p className="text-sm font-medium truncate" style={{ color: "var(--foreground)" }}>{resource.resourceType}</p>
+              </div>
+            </div>
+
             {resource.category && (
               <div className="flex items-center gap-3 p-3 rounded-xl min-w-0" style={{ background: "var(--muted-bg)" }}>
                 <Tag size={16} className="flex-shrink-0" style={{ color: "var(--muted)" }} />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs" style={{ color: "var(--muted)" }}>Category</p>
+                  <p className="text-xs" style={{ color: "var(--muted)" }}>Topic</p>
                   <p className="text-sm font-medium truncate" style={{ color: "var(--foreground)" }}>{resource.category}</p>
                 </div>
               </div>

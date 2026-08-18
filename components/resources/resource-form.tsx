@@ -3,10 +3,15 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { X } from "lucide-react";
+import { X, HelpCircle } from "lucide-react";
 import { Resource } from "@/types";
 import { createResourceSchema, type CreateResourceInput } from "@/lib/validations";
-import { RESOURCE_TYPES, RESOURCE_CATEGORIES } from "@/lib/constants";
+import {
+  RESOURCE_TYPES,
+  RESOURCE_CATEGORIES,
+  PRIMARY_RESOURCE_TYPES,
+  PRIMARY_RESOURCE_CATEGORIES,
+} from "@/lib/constants";
 
 interface ResourceFormProps {
   open: boolean;
@@ -48,7 +53,7 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
     resolver: zodResolver(createResourceSchema),
     defaultValues: {
       title: "",
-      resourceType: "Website",
+      resourceType: "Documentation",
       url: "",
       description: "",
       personalNotes: "",
@@ -63,7 +68,7 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
     if (initialData && open) {
       reset({
         title: initialData.title ?? "",
-        resourceType: (initialData.resourceType as CreateResourceInput["resourceType"]) ?? "Website",
+        resourceType: (initialData.resourceType as CreateResourceInput["resourceType"]) ?? "Documentation",
         url: initialData.url ?? "",
         description: initialData.description ?? "",
         personalNotes: initialData.personalNotes ?? "",
@@ -118,6 +123,25 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
         {/* Body */}
         <form onSubmit={handleSubmit(onFormSubmit)} className="flex flex-col min-h-0 flex-1">
           <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
+            {/* Info / Boundary Guide Callout */}
+            <div
+              className="p-3 rounded-xl flex items-start gap-2.5 text-xs"
+              style={{
+                background: "rgba(99,102,241,0.08)",
+                border: "1px solid rgba(99,102,241,0.2)",
+                color: "var(--foreground)",
+              }}
+            >
+              <HelpCircle size={16} className="mt-0.5 flex-shrink-0 text-indigo-500 dark:text-indigo-400" />
+              <div>
+                <span className="font-semibold text-indigo-600 dark:text-indigo-400">Classification Guide:</span>
+                <ul className="mt-1 space-y-0.5 text-muted-foreground" style={{ color: "var(--muted)" }}>
+                  <li>• <strong>Format</strong> = How this resource is delivered or consumed (e.g. Documentation, Video, Tool, E-Book)</li>
+                  <li>• <strong>Topic</strong> = What this resource is about (e.g. Frontend Development, AI/ML, System Design)</li>
+                </ul>
+              </div>
+            </div>
+
             {/* Title */}
             <div>
               <label style={labelStyle}>Title *</label>
@@ -136,27 +160,49 @@ export function ResourceForm({ open, onClose, onSubmit, initialData, mode }: Res
               )}
             </div>
 
-            {/* Type + Category */}
+            {/* Format + Topic */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label style={labelStyle}>Resource Type *</label>
+                <label style={labelStyle}>Format *</label>
                 <select {...register("resourceType")} style={inputStyle}>
-                  {RESOURCE_TYPES.map((t) => (
+                  {PRIMARY_RESOURCE_TYPES.map((t) => (
                     <option key={t} value={t}>{t}</option>
                   ))}
+                  {/* Option for legacy value if set */}
+                  {initialData?.resourceType &&
+                    !PRIMARY_RESOURCE_TYPES.includes(initialData.resourceType as any) &&
+                    RESOURCE_TYPES.includes(initialData.resourceType as any) && (
+                      <option value={initialData.resourceType}>
+                        {initialData.resourceType} (Legacy)
+                      </option>
+                    )}
                 </select>
+                <p className="mt-1 text-[11px]" style={{ color: "var(--muted)" }}>
+                  How this resource is delivered or consumed.
+                </p>
                 {errors.resourceType && (
                   <p className="mt-1 text-xs text-red-500">{errors.resourceType.message}</p>
                 )}
               </div>
               <div>
-                <label style={labelStyle}>Category</label>
+                <label style={labelStyle}>Topic</label>
                 <select {...register("category")} style={inputStyle}>
-                  <option value="">None</option>
-                  {RESOURCE_CATEGORIES.map((c) => (
+                  <option value="">None (Unassigned)</option>
+                  {PRIMARY_RESOURCE_CATEGORIES.map((c) => (
                     <option key={c} value={c}>{c}</option>
                   ))}
+                  {/* Option for legacy category if set */}
+                  {initialData?.category &&
+                    !PRIMARY_RESOURCE_CATEGORIES.includes(initialData.category as any) &&
+                    RESOURCE_CATEGORIES.includes(initialData.category as any) && (
+                      <option value={initialData.category}>
+                        {initialData.category} (Legacy)
+                      </option>
+                    )}
                 </select>
+                <p className="mt-1 text-[11px]" style={{ color: "var(--muted)" }}>
+                  What this resource is about.
+                </p>
               </div>
             </div>
 

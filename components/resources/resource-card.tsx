@@ -49,10 +49,25 @@ export function ResourceCard({
       {/* Header row */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <ResourceTypeBadge type={resource.resourceType} />
+          <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+            <ResourceTypeBadge type={resource.resourceType} />
+            {resource.category && (
+              <span
+                className="text-xs px-2 py-0.5 rounded-full font-medium truncate max-w-[150px]"
+                style={{
+                  background: "rgba(99,102,241,0.1)",
+                  color: "var(--accent)",
+                  border: "1px solid rgba(99,102,241,0.2)",
+                }}
+                title={`Topic: ${resource.category}`}
+              >
+                {resource.category}
+              </span>
+            )}
+          </div>
           <Link
             href={`/resources/${resource.id}`}
-            className="block mt-2 font-semibold text-sm leading-snug hover:underline line-clamp-2 break-words"
+            className="block font-semibold text-sm leading-snug hover:underline line-clamp-2 break-words"
             style={{ color: "var(--foreground)" }}
           >
             {resource.title}
